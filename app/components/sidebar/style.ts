@@ -44,5 +44,6 @@ export const SidebarContainer = styled(motion.div)`
 		width: 100%;
 		margin-top: auto;
 		position: relative;
+		color: #fff;
 	}
 `;
