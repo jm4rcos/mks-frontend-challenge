@@ -1,21 +1,14 @@
+import { addProduct } from "@/app/features/cart/cart-slice";
+import { useAppDispatch } from "@/hooks/use-app-selector";
+import { Product } from "@/types";
 import { useQuery } from "@tanstack/react-query";
 import ProductSkeleton from "../product-skeleton";
 import { BagIcon } from "../ui/bag-icon";
 import { BuyButton, ProductCard, ProductContainer } from "./style";
 
-interface Product {
-    id: number;
-    name: string;
-    brand: string;
-    description: string;
-    photo: string;
-    price: string;
-    createdAt: string;
-    updatedAt: string;
-}
-
 export const Products = () => {
-    
+    const dispatch = useAppDispatch();
+
     const { data, isLoading } = useQuery({
         queryKey: ['products'],
         
@@ -29,6 +22,10 @@ export const Products = () => {
 
     if (isLoading) return <ProductSkeleton />
 
+    const handleAddProduct = (product: Product) => {
+        dispatch(addProduct(product));
+    }
+
     return (
         <ProductContainer>
             {data.map((product: Product) => (
@@ -41,7 +38,7 @@ export const Products = () => {
                         <h3>{product.name}</h3>
                         <p>{product.description}</p>
                     </div>
-                        <BuyButton>
+                        <BuyButton onClick={() => handleAddProduct(product)}>
                             <BagIcon />
                             <p>Comprar</p>
                         </BuyButton>

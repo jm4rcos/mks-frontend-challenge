@@ -2,7 +2,9 @@
 
 import { useCallback } from "react"
 
+import { useAppSelector } from "@/hooks/use-app-selector"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
+
 import { CartItem } from "../cart-item"
 import { CloseButton } from "../close-button"
 import { SidebarFooter } from "../sidebar-footer"
@@ -14,6 +16,8 @@ export const Sidebar = () => {
     const searchParams = useSearchParams();
 
     const sidebarValue = searchParams.get('sidebar');
+
+    const products = useAppSelector((state) => state.cart.products);
 
     const createQueryString = useCallback(
         (name: string, value: string) => {
@@ -59,10 +63,17 @@ export const Sidebar = () => {
             </div>
 
             <div className="sidebar-content">
-                <CartItem title="Apple Watch Series 4 GPS" />
-                <CartItem title="Apple Watch Series 4 GPS" />
-                <CartItem title="Apple Watch Series 4 GPS" />
-                <CartItem title="Apple Watch Series 4 GPS" />
+                {products.map((product) => (
+                    <CartItem
+                      key={product.id}
+                      name={product.name}
+                      price={product.price}
+                      quantity={product.quantity}
+                      photo={product.photo}
+                      id={product.id}
+                      
+                    />
+                ))}
             </div>
             <div className="sidebar-footer">
                 <SidebarFooter />

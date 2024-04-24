@@ -35,6 +35,22 @@ export const SidebarContainer = styled(motion.div)`
 		display: flex;
 		flex-direction: column;
 		gap: 1.25rem;
+
+		overflow: auto;
+		scrollbar-width: thin;
+		scrollbar-color: #6969dd #e0e0e0;
+		scrollbar-width: thin;
+		scrollbar-gutter: stable;
+
+		&::-webkit-scrollbar {
+			width: 10px;
+		}
+
+		&::-webkit-scrollbar-thumb {
+			border-radius: 100px;
+			background: #8070d4;
+			border: 6px solid rgba(0, 0, 0, 0.2);
+		}
 	}
 
 	.sidebar-footer {

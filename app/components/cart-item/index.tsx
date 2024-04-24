@@ -1,27 +1,64 @@
-import { CloseButton } from "../close-button"
-import { QuantityInput } from "../quantity-input"
-import { CardItemContainer, CartItemValue } from "./style"
+import { decreaseProduct, increaseProduct, removeProduct } from "@/app/features/cart/cart-slice";
+import { useAppDispatch } from "@/hooks/use-app-selector";
+import { CloseButton } from "../close-button";
+import { QuantityInput } from "../quantity-input";
+import { CardItemContainer, CartItemValue } from "./style";
 
 interface CartItemProps {
-    title: string
+    id: number;
+	name: string;
+	photo: string;
+	price: string;
+	quantity: number;
 }
 
 export const CartItem = ({
-    title
+    id,
+    name,
+    price,
+    quantity,
+    photo,
 }: CartItemProps) => {
+    const dispatch = useAppDispatch();
+
+    const handleRemoveProduct = () => {
+        dispatch(removeProduct(id));
+    }
+
+    const handleDecreaseProduct = () => {
+        dispatch(decreaseProduct(id));
+    }
+    
+    const handleIncreaseProduct = () => {
+        dispatch(increaseProduct(id));
+    }
+
     return (
-        <CardItemContainer>
+        <CardItemContainer
+            layout
+            initial={{ opacity: 0, y: 50, scale: 0.3 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.5, transition: { duration: 0.2 } }}
+        >
             <div className="close-cart-item">
-                <CloseButton size={26} onClick={() => {}} />
+                <CloseButton size={26} onClick={handleRemoveProduct} />
             </div>
             <img
-                src="https://media.discordapp.net/attachments/840063709401317406/1232453084370829362/image.png?ex=662982e1&is=66283161&hm=beb156d1aef39763828b348dba6b884d1b2be71da2a0f03b936822e7e9bfba5a&=&format=webp&quality=lossless"
-                alt="Apple Watch Series 4 GPS"
+                src={photo}
+                alt={name}
             />
-            <h3>{title}</h3>
-            <QuantityInput />
+            <h3>{name}</h3>
+            <QuantityInput
+                quantity={quantity}
+                onDecrease={handleDecreaseProduct}
+                onIncrease={handleIncreaseProduct}
+            />
             <CartItemValue>
-                <p>R$ {399}</p>
+                <p>
+                    {(Number(price) * quantity).toLocaleString(
+                        'pt-BR', { style: 'currency', currency: 'BRL' }
+                    )}
+                </p>
             </CartItemValue>
         </CardItemContainer>
     )

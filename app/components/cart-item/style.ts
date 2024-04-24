@@ -1,6 +1,7 @@
+import { motion } from 'framer-motion';
 import styled from 'styled-components';
 
-export const CardItemContainer = styled.div`
+export const CardItemContainer = styled(motion.div)`
 	padding: 1.5rem 0.85rem;
 	background-color: #fff;
 	border-radius: 8px;
