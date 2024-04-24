@@ -1,6 +1,9 @@
 import styled, { keyframes } from 'styled-components';
 
 export const CardContainerSkeleton = styled.div`
+	height: 100%;
+	width: 100%;
+
 	display: grid;
 	place-items: center;
 	gap: 1.5rem;
