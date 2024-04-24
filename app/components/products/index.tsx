@@ -1,79 +1,52 @@
-import { BagIcon } from "../ui/bag-icon"
-import { BuyButton, ProductCard, ProductContainer } from "./style"
+import { useQuery } from "@tanstack/react-query";
+import ProductSkeleton from "../product-skeleton";
+import { BagIcon } from "../ui/bag-icon";
+import { BuyButton, ProductCard, ProductContainer } from "./style";
+
+interface Product {
+    id: number;
+    name: string;
+    brand: string;
+    description: string;
+    photo: string;
+    price: string;
+    createdAt: string;
+    updatedAt: string;
+}
 
 export const Products = () => {
+    
+    const { data, isLoading, isError } = useQuery({
+        queryKey: ['products'],
+        
+        queryFn: async () => {
+            const res = await fetch(`/api/get-products?page=${1}&rows=${8}`)
+            const { products } = await res.json()
+
+            return products;
+        }
+    });
+
+    if (isLoading) return <ProductSkeleton />
+
     return (
         <ProductContainer>
-            <ProductCard>
-                <div className="wrapper">
-                    <img
-                        src="https://media.discordapp.net/attachments/840063709401317406/1232453084370829362/image.png?ex=662982e1&is=66283161&hm=beb156d1aef39763828b348dba6b884d1b2be71da2a0f03b936822e7e9bfba5a&=&format=webp&quality=lossless"
-                        alt="Apple Watch Series 4 GPS"
-                    />
-                    <h3>Apple Watch Series 4 GPS</h3>
-                    <p>Redesigned from scratch and completely revised.</p>
-                </div>
-                    <BuyButton>
-                        <BagIcon />
-                        <p>Comprar</p>
-                    </BuyButton>
-            </ProductCard>
-            <ProductCard>
-                <div className="wrapper">
-                    <img
-                        src="https://media.discordapp.net/attachments/840063709401317406/1232453084370829362/image.png?ex=662982e1&is=66283161&hm=beb156d1aef39763828b348dba6b884d1b2be71da2a0f03b936822e7e9bfba5a&=&format=webp&quality=lossless"
-                        alt="Apple Watch Series 4 GPS"
-                    />
-                    <h3>Apple Watch Series 4 GPS</h3>
-                    <p>Redesigned from scratch and completely revised.</p>
-                </div>
-                    <BuyButton>
-                        <BagIcon />
-                        <p>Comprar</p>
-                    </BuyButton>
-            </ProductCard>
-            <ProductCard>
-                <div className="wrapper">
-                    <img
-                        src="https://media.discordapp.net/attachments/840063709401317406/1232453084370829362/image.png?ex=662982e1&is=66283161&hm=beb156d1aef39763828b348dba6b884d1b2be71da2a0f03b936822e7e9bfba5a&=&format=webp&quality=lossless"
-                        alt="Apple Watch Series 4 GPS"
-                    />
-                    <h3>Apple Watch Series 4 GPS</h3>
-                    <p>Redesigned from scratch and completely revised.</p>
-                </div>
-                    <BuyButton>
-                        <BagIcon />
-                        <p>Comprar</p>
-                    </BuyButton>
-            </ProductCard>
-            <ProductCard>
-                <div className="wrapper">
-                    <img
-                        src="https://media.discordapp.net/attachments/840063709401317406/1232453084370829362/image.png?ex=662982e1&is=66283161&hm=beb156d1aef39763828b348dba6b884d1b2be71da2a0f03b936822e7e9bfba5a&=&format=webp&quality=lossless"
-                        alt="Apple Watch Series 4 GPS"
-                    />
-                    <h3>Apple Watch Series 4 GPS</h3>
-                    <p>Redesigned from scratch and completely revised.</p>
-                </div>
-                    <BuyButton>
-                        <BagIcon />
-                        <p>Comprar</p>
-                    </BuyButton>
-            </ProductCard>
-            <ProductCard>
-                <div className="wrapper">
-                    <img
-                        src="https://media.discordapp.net/attachments/840063709401317406/1232453084370829362/image.png?ex=662982e1&is=66283161&hm=beb156d1aef39763828b348dba6b884d1b2be71da2a0f03b936822e7e9bfba5a&=&format=webp&quality=lossless"
-                        alt="Apple Watch Series 4 GPS"
-                    />
-                    <h3>Apple Watch Series 4 GPS</h3>
-                    <p>Redesigned from scratch and completely revised.</p>
-                </div>
-                    <BuyButton>
-                        <BagIcon />
-                        <p>Comprar</p>
-                    </BuyButton>
-            </ProductCard>
+            {data.map((product: Product) => (
+                <ProductCard key={product.id}>
+                    <div className="wrapper">
+                        <img
+                            src={product.photo}
+                            alt={product.name}
+                        />
+                        <h3>{product.name}</h3>
+                        <p>{product.description}</p>
+                    </div>
+                        <BuyButton>
+                            <BagIcon />
+                            <p>Comprar</p>
+                        </BuyButton>
+                </ProductCard>
+            ))}
         </ProductContainer>
     )
 }
