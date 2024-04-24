@@ -1,5 +1,6 @@
 'use client'
 
+import { Suspense } from "react";
 import { Provider } from "react-redux";
 import { Navbar, Products } from "./components";
 import { Footer } from "./components/footer";
@@ -12,14 +13,16 @@ const Home = () => {
     return (
       <QueryProvider>
         <Provider store={store}>
-            <div className=".app">
-            <HomeContainer>
-              <Sidebar />
-              <Navbar />
-              <Products />
-              <Footer />
-            </HomeContainer>
-          </div>
+            <Suspense>
+              <div className=".app">
+                <HomeContainer>
+                  <Sidebar />
+                  <Navbar />
+                  <Products />
+                  <Footer />
+                </HomeContainer>
+              </div>
+            </Suspense>
         </Provider>  
       </QueryProvider>
     )
