@@ -1,6 +1,16 @@
 import styled from 'styled-components';
 
+export const Container = styled.div`
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 4rem 1rem;
+	margin-top: 100px;
+`;
+
 export const ProductContainer = styled.div`
+	height: 100%;
 	display: grid;
 	place-items: center;
 	gap: 1.5rem;
@@ -9,6 +19,15 @@ export const ProductContainer = styled.div`
 	background-color: #fff;
 
 	max-width: 900px;
+
+	@media (max-width: 915px) {
+		grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+		max-width: 100%;
+	}
+
+	@media (max-width: 480px) {
+		grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
+	}
 `;
 
 export const ProductCard = styled.div`
@@ -51,6 +70,44 @@ export const ProductCard = styled.div`
 
 			-webkit-box-orient: vertical;
 			overflow: hidden;
+		}
+	}
+
+	@media (max-width: 768px) {
+		.wrapper {
+			height: 250px;
+
+			img {
+				max-width: 130px;
+				max-height: 110px;
+			}
+
+			h3 {
+				font-size: 0.9rem;
+			}
+
+			p {
+				font-size: 11px;
+			}
+		}
+	}
+
+	@media (max-width: 480px) {
+		.wrapper {
+			height: 220px;
+
+			img {
+				max-width: 100px;
+				max-height: 90px;
+			}
+
+			h3 {
+				font-size: 0.8rem;
+			}
+
+			p {
+				font-size: 10px;
+			}
 		}
 	}
 `;

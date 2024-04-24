@@ -4,7 +4,7 @@ import { Product } from "@/types";
 import { useQuery } from "@tanstack/react-query";
 import ProductSkeleton from "../product-skeleton";
 import { BagIcon } from "../ui/bag-icon";
-import { BuyButton, ProductCard, ProductContainer } from "./style";
+import { BuyButton, Container, ProductCard, ProductContainer } from "./style";
 
 export const Products = () => {
     const dispatch = useAppDispatch();
@@ -27,23 +27,25 @@ export const Products = () => {
     }
 
     return (
-        <ProductContainer>
-            {data.map((product: Product) => (
-                <ProductCard key={product.id}>
-                    <div className="wrapper">
-                        <img
-                            src={product.photo}
-                            alt={product.name}
-                        />
-                        <h3>{product.name}</h3>
-                        <p>{product.description}</p>
-                    </div>
-                        <BuyButton onClick={() => handleAddProduct(product)}>
-                            <BagIcon />
-                            <p>Comprar</p>
-                        </BuyButton>
-                </ProductCard>
-            ))}
-        </ProductContainer>
+        <Container>
+            <ProductContainer>
+                {data.map((product: Product) => (
+                    <ProductCard key={product.id}>
+                        <div className="wrapper">
+                            <img
+                                src={product.photo}
+                                alt={product.name}
+                            />
+                            <h3>{product.name}</h3>
+                            <p>{product.description}</p>
+                        </div>
+                            <BuyButton onClick={() => handleAddProduct(product)}>
+                                <BagIcon />
+                                <p>Comprar</p>
+                            </BuyButton>
+                    </ProductCard>
+                ))}
+            </ProductContainer>
+        </Container>
     )
 }
