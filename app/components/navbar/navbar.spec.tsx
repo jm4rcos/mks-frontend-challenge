@@ -50,6 +50,6 @@ describe(Navbar.name, () => {
 
         fireEvent.click(container.getByTitle('CartButton'));
 
-        store.dispatch(openSidebar());
+        expect(store.dispatch(openSidebar()))
 	});
 });

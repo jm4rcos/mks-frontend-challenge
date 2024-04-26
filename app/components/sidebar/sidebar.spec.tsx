@@ -61,6 +61,6 @@ describe('Sidebar', () => {
 		const container = sut.render();
 
 		fireEvent.click(container.getByText('Close'));
-		store.dispatch(closeSidebar());
+		expect(store.dispatch(closeSidebar()))
 	});
 });
