@@ -1,5 +1,5 @@
 import { addProduct } from "@/app/features/cart/cart-slice";
-import { useAppDispatch } from "@/hooks/use-app-selector";
+import { useAppDispatch } from "@/app/hooks/use-app-selector";
 import { Product } from "@/types";
 import { useQuery } from "@tanstack/react-query";
 import ProductSkeleton from "../product-skeleton";

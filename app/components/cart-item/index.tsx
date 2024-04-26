@@ -1,5 +1,5 @@
 import { decreaseProduct, increaseProduct, removeProduct } from "@/app/features/cart/cart-slice";
-import { useAppDispatch } from "@/hooks/use-app-selector";
+import { useAppDispatch } from "@/app/hooks/use-app-selector";
 import { CloseButton } from "../close-button";
 import { QuantityInput } from "../quantity-input";
 import { CardItemContainer, CartItemValue } from "./style";

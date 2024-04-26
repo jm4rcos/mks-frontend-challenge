@@ -1,38 +1,22 @@
 'use client'
 
-import { useCallback } from "react"
 
-import { useAppSelector } from "@/hooks/use-app-selector"
-import { usePathname, useRouter, useSearchParams } from "next/navigation"
+import { useAppSelector } from "../../hooks/use-app-selector"
+
+import { Product } from "@/types"
+import { useDispatch } from "react-redux"
+import { closeSidebar } from "../../../app/features/sidebar/sidebar-slice"
 
 import { CartItem } from "../cart-item"
 import { CloseButton } from "../close-button"
 import { SidebarFooter } from "../sidebar-footer"
 import { SidebarContainer } from "./style"
 
-export const Sidebar = () => {  
-    const router = useRouter();
-    const pathname = usePathname();
-    const searchParams = useSearchParams();
+export const Sidebar = () => { 
+  const isOpen = useAppSelector((state) => state.sidebar.isOpen)
+  const products = useAppSelector((state) => state.cart.products);
 
-    const sidebarValue = searchParams.get('sidebar');
-
-    const products = useAppSelector((state) => state.cart.products);
-
-    const createQueryString = useCallback(
-        (name: string, value: string) => {
-            const params = new URLSearchParams(searchParams.toString())
-            params.set(name, value)
-            return params.toString()
-        },
-        [searchParams]
-    );
-
-    const toggleSidebar = () => {
-    const newValue = sidebarValue === 'true' ? 'false' : 'true';
-    router.push(`${pathname}?${createQueryString('sidebar', newValue)}`);
-};
-
+  const dispatch = useDispatch();
 
   const variants = {
     open: {
@@ -50,20 +34,19 @@ export const Sidebar = () => {
       },
     },
   };
-
     return (
         <SidebarContainer
             variants={variants}
             initial="closed"
-            animate={sidebarValue === 'true' ? 'open' : 'closed'}
+            animate={isOpen ? 'open' : 'closed'}
         >
             <div className="sidebar-header">
                 <h3>Carrinho de compras</h3>
-                <CloseButton onClick={toggleSidebar} />
+                <CloseButton onClick={() => dispatch(closeSidebar())} />
             </div>
 
             <div className="sidebar-content">
-                {products.map((product) => (
+                {products.map((product: Product) => (
                     <CartItem
                       key={product.id}
                       name={product.name}

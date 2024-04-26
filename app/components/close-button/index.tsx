@@ -15,7 +15,7 @@ export const CloseButton = ({
             onClick={onClick}
             className="close-sidebar"
         >
-            <p>X</p>
+            <p title="Fechar Carrinho">X</p>
         </CloseButtonContainer>
     )
 }

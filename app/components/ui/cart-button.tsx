@@ -1,38 +1,20 @@
 'use client'
 
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useCallback } from "react";
+import { useDispatch } from "react-redux";
+import { useAppSelector } from "../../hooks/use-app-selector";
 
-import { useAppSelector } from "@/hooks/use-app-selector";
-
-import { Button } from "@/app/components/style";
-import { CartIcon } from "@/app/components/ui/cart-icon";
+import { Button } from "../../components/style";
+import { CartIcon } from "../../components/ui/cart-icon";
+import { openSidebar } from "../../features/sidebar/sidebar-slice";
 
 export const CartButton = () => {
-    const router = useRouter();
-    const pathname = usePathname();
-    const searchParams = useSearchParams();
-
-    const sidebarValue = searchParams.get('sidebar');
     const products = useAppSelector((state) => state.cart.products);
-
-    const createQueryString = useCallback(
-        (name: string, value: string) => {
-            const params = new URLSearchParams(searchParams.toString())
-            params.set(name, value)
-            return params.toString()
-        },
-        [searchParams]
-    );
-
-    const toggleSidebar = () => {
-        const newValue = sidebarValue === 'true' ? 'false' : 'true';
-        router.push(pathname + '?' + createQueryString('sidebar', newValue));
-    };
+    const dispatch = useDispatch();
 
     return (
         <Button
-            onClick={toggleSidebar}
+            title="CartButton"
+            onClick={() => dispatch(openSidebar())} 
         >
             <CartIcon />
             <span>{products.length}</span>
